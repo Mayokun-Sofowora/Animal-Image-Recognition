@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Project files
+animals10/
+preprocessed-img/
+data/preprocess_data.py
+*.keras
+
 # Distribution / packaging
 .Python
 build/
