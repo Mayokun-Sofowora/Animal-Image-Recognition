@@ -78,7 +78,7 @@ def train_and_evaluate(with_batch_norm=False, epochs=5, kernel_size=3, dropout_r
 
 if __name__ == "__main__":
     # TEST WITH DIFFERENT VALUES
-    epochs_values = [5, 10, 20]
+    epochs_values = [15]
     kernel_sizes = [3, 4, 5]
     dropout_rates = [0.2, 0.4, 0.8]
 
@@ -87,6 +87,7 @@ if __name__ == "__main__":
             for dropout_rate in dropout_rates:
                 print('\n-----------------------------------------------------------------------------------------')
                 print(f"TESTING WITH EPOCHS = {epochs}, KERNEL_SIZE = {kernel_size}, DROPOUT_RATE = {dropout_rate}")
+                print('-----------------------------------------------------------------------------------------\n')
 
                 # PREPROCESS THE DATA WITH THE CURRENT PARAMETERS
                 data = preprocess_data()
