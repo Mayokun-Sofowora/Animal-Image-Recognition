@@ -8,6 +8,9 @@ import cv2
 from sklearn.model_selection import train_test_split
 from data.download_data import download_data
 from data.preprocess_data import preprocess_images
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
 
 # DOWNLOAD THE DATASET FROM KAGGLE
 if not os.path.exists('./data/animals10/raw-img'):
@@ -100,10 +103,41 @@ def create_model():
 
 model = create_model()
 
-model.fit(x_train, y_train, epochs=5, batch_size=256)
+history = model.fit(x_train, y_train, epochs=5, batch_size=256)
 x_test = np.array(x_test).reshape(-1, img_size, img_size, 1)
 y_test = np.array(y_test)
 model.evaluate(x_test, y_test)
+
+# Plotting training and validation accuracy and loss
+plt.figure(figsize=(14, 5))
+
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'], label='Train Accuracy')
+plt.title('Training Accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'], label='Train Loss')
+plt.title('Training Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.show()
+
+# Confusion matrix
+y_pred = model.predict(x_test)
+y_pred_classes = np.argmax(y_pred, axis=1)
+conf_matrix = confusion_matrix(y_test, y_pred_classes)
+
+plt.figure(figsize=(10, 8))
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+plt.xlabel('Predicted labels')
+plt.ylabel('True labels')
+plt.title('Confusion Matrix')
+plt.show()
 
 # SAVE MODELS
 if not os.path.exists('./models'):
